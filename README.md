@@ -1,6 +1,6 @@
 # 4H-FourHours
 NFT(ERC721) - 07/31/2022
-
+---
 4H - Сreating a contract for sale, and the contract for creating NFT.
 
 1) Only the contract-seller can mint NFT.
