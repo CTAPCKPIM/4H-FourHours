@@ -16,7 +16,6 @@ import './IFourHoursNFT.sol';
      *  {fourHours} - savs the address of FourHours.sol.
      */
     uint256 public mainTimestamp;
-    uint256 public futureTimestamp;
     address public fourHours;
  	
     /**

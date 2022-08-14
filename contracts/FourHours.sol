@@ -89,6 +89,4 @@ import './Token/IFourHoursNFT.sol';
     * {fallback} and {receive()} - In order for the contract to accept ether, to its balance
     */
    fallback() external payable {}
-
-   receive() external payable {}
  }
