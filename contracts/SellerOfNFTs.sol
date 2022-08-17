@@ -8,20 +8,23 @@ import './Token/IFourHoursNFT.sol';
 /**
  * @author by CTAPCKPIM
  * @title main contract for 'FourHoursNFT.sol'
+ *  This contract should create and sell NFTs, 
+ *  but this does you can only hours, 
+ *  with a moment when the NFT contract was be deployed.
  */
- contract FourHours is Ownable{
+ contract SellerOfNFTs is Ownable{
 
  	/**
  	 * All variables:
  	 *  {count} - count of NFTs.
-    *  {price} - a price on NFT(0.1 ETH).
-    *  {percent} - percent of the number {price}.
-    *  {addressNFT} - saves an address of the 'FourHoursNFT'.
+     *  {price} - a price on NFT(0.1 ETH).
+     *  {percent} - percent of the number {price}.
+     *  {addressNFT} - saves an address of the 'FourHoursNFT'.
  	 */
- 	uint256 public count;
-   uint256 public price;
-   uint256 public percent;  
-   address public addressNFT; 
+    uint256 public count;
+    uint256 public price;
+    uint256 public percent;  
+    address public addressNFT; 
 
  	/**
  	 * All events:
@@ -52,8 +55,8 @@ import './Token/IFourHoursNFT.sol';
  	 * Creating and buying a NFT:
  	 *  - adding a new owner of the NFT(for the search owner of the NFT).
  	 *  - add a new NFT of the owner(for the search NFT of the owner).
-    *  {price} - increases on 5%/
-    *  {IFourHoursNFT} - an interface of the 'FourHoursNFT.sol' contract.
+     * {price} - increases on 5%/
+     * {IFourHoursNFT} - an interface of the 'FourHoursNFT.sol' contract.
  	 */
  	function createAndBuy(string memory _tokenURI) public payable returns(uint256) {
       require(addressNFT != address(0), 'ERR: address/no exist'); 
@@ -61,9 +64,9 @@ import './Token/IFourHoursNFT.sol';
       IFourHoursNFT(addressNFT).createNFT(msg.sender, _tokenURI, count, address(this));
       owner[count] = msg.sender;
       nft[msg.sender] = count;
- 		count += 1;
+ 	  count += 1;
       price += ((price * percent) / 100); 
- 		emit Successfully(count, msg.sender);
+ 	  emit Successfully(count, msg.sender);
       return count;
  	}
 
@@ -73,15 +76,15 @@ import './Token/IFourHoursNFT.sol';
   	 */
  	function withdrawal(address _to) public payable onlyOwner returns(uint256) {
       uint256 eth = address(this).balance;
- 		payable(_to).transfer(eth);
- 		emit Withdrawal(eth, _to);
+ 	  payable(_to).transfer(eth);
+ 	  emit Withdrawal(eth, _to);
       return eth;
  	}
 
    /**
     * Setting an address of NFT contract.
     */
-   function addressOfNFT(address _addressOfNFT) public {
+   function addressOfNFT(address _addressOfNFT) public onlyOwner {
       addressNFT = _addressOfNFT;
    }
 
@@ -89,4 +92,5 @@ import './Token/IFourHoursNFT.sol';
     * {fallback} and {receive()} - In order for the contract to accept ether, to its balance
     */
    fallback() external payable {}
+   receive() external payable {}
  }

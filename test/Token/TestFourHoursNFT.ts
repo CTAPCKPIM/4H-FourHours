@@ -4,7 +4,7 @@ import { ethers } from 'hardhat';
 describe('FourHoursNFT: ', () => {
 	let owner: any;
 	let user: any;
-	let fourHours: any;
+	let sellerOfNFTs: any;
 	let fourHoursNFT: any;
 
 	beforeEach(async () => {
@@ -12,17 +12,17 @@ describe('FourHoursNFT: ', () => {
 		[owner, user] = await ethers.getSigners();
 
 		// Deployed 'FourHours.sol'.
-		const FourHours = await ethers.getContractFactory('FourHours', owner);
-		fourHours = await FourHours.deploy();
-		await fourHours.deployed();
+		const SellerOfNFTs = await ethers.getContractFactory('SellerOfNFTs', owner);
+		sellerOfNFTs = await SellerOfNFTs.deploy();
+		await sellerOfNFTs.deployed();
 
 		// Deployed 'FourHoursNFT.sol'.
 		const FourHoursNFT = await ethers.getContractFactory('FourHoursNFT', owner);
-		fourHoursNFT = await FourHoursNFT.deploy(fourHours.address);
+		fourHoursNFT = await FourHoursNFT.deploy(sellerOfNFTs.address);
 		await fourHoursNFT.deployed();
 
 		// Setting the address of 'FourHoursNFT.sol'.
-		await fourHours.addressOfNFT(fourHoursNFT.address);
+		await sellerOfNFTs.addressOfNFT(fourHoursNFT.address);
 	});
 
 	// Deploys the contract.
@@ -39,7 +39,7 @@ describe('FourHoursNFT: ', () => {
 				user.address,
 				'https://www.japancars.ua',
 				1,
-				fourHours.address
+				sellerOfNFTs.address
 			))
 		.to.be.revertedWith(message);
 	});
