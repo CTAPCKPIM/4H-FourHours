@@ -2,14 +2,15 @@
 
 pragma solidity 0.8.1;
 
-import '@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol';
-import './IFourHoursNFT.sol';
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "./IFourHoursNFT.sol";
 
 /**
  * @author by CTAPCKPIM
- * @title NFT for contract 'FourHours.sol'
+ * @title NFT for contract 'SellerOfNFTs.sol'
+ * @notice After deployed, is have four hours for a mint of NFTs.
  */
- contract FourHoursNFT is ERC721URIStorage {
+contract FourHoursNFT is ERC721URIStorage {
     /**
      * All variables:
      *  {mainTimestamp} - saving timestamp 'now', when the contract will to be deployed.
@@ -17,28 +18,30 @@ import './IFourHoursNFT.sol';
      */
     uint256 public mainTimestamp;
     address public fourHours;
- 	
+
     /**
-     * Assigns value to variable.
+     * @dev Assigns value to variable.
      */
-    constructor(address _addressFourHours) ERC721('FourHours', '4H') {
+    constructor(address _addressFourHours) ERC721("FourHours", "4H") {
         fourHours = _addressFourHours;
         mainTimestamp = block.timestamp;
     }
 
     /**
+     * @dev 'mint' and 'set URI'
      * Create the NFT:
      *  {_address} - owner of the NFT.
      *  {_count} - id of the NFT.
      *  {_fourHours} - address of the FourHours.sol
      */
-    function createNFT(address _address,
-        string memory _tokenURI, 
-        uint256 _count, 
+    function createNFT(
+        address _address,
+        string memory _tokenURI,
+        uint256 _count,
         address _fourHours
     ) public {
-        require(mainTimestamp + 14400 seconds >= block.timestamp, 'ERR: time');
-        require(_fourHours == fourHours, 'ERR: address');
+        require(mainTimestamp + 14400 seconds >= block.timestamp, "ERR: time");
+        require(_fourHours == fourHours, "ERR: address");
         _mint(_address, _count);
         _setTokenURI(_count, _tokenURI);
     }
