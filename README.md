@@ -12,11 +12,11 @@ NFT(ERC721) - 07/31/2022
 
 In this project using **"Yarn"**.
 
-**yarn build** - for _compile_ contracts;
-**yarn test** - for _testing_ contracts;
-**yarn coverage** - for see _coverage_;
-**yarn size** - for see the _size_ of all contracts;
-**prettier** - for code _formatting_;
++ **yarn build** - for _compile_ contracts;
++ **yarn test** - for _testing_ contracts;
++ **yarn coverage** - for see _coverage_;
++ **yarn size** - for see the _size_ of all contracts;
++ **prettier** - for code _formatting_;
 
 ---
 ___MarketNFT.sol :___
