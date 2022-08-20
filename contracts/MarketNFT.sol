@@ -9,10 +9,10 @@ import "./Token/IFourHoursNFT.sol";
  * @author by CTAPCKPIM
  * @title main contract for 'FourHoursNFT.sol'
  * @notice This contract should create and sell NFTs,
- *  but this does you can only hours,
- *  with a moment when the NFT contract was be deployed.
+ * | but this does you can only hours,
+ * |with a moment when the NFT contract was be deployed.
  */
-contract SellerOfNFTs is Ownable {
+contract MarketNFT is Ownable {
     /**
      * All variables:
      *  {count} - count of NFTs.

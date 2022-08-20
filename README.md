@@ -1,23 +1,28 @@
 # 4H-FourHours
 NFT(ERC721) - 07/31/2022
 ---
-4H - Сreating a contract for sale, and the contract for creating NFT.
+**4H** - Сreating a contract for _sale_, and the contract for _creating_ NFT.
 
-1) Only the contract-seller can mint NFT.
-2) Creating and buying the NFT, not more than four hours after deploying these contracts.
-3) Owner can set the image himself.
++ Only the **contract-seller** can mint NFT.
++ Creating and buying the NFT, **not more than four hours** after deploying these contracts.
++ Owner can **set** the image himself.
 
 ---
-Sample Hardhat Project
+## Hardhat Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+In this project using **"Yarn"**.
 
-Try running some of the following tasks:
+**yarn build** - for _compile_ contracts;
+**yarn test** - for _testing_ contracts;
+**yarn coverage** - for see _coverage_;
+**yarn size** - for see the _size_ of all contracts;
+**prettier** - for code _formatting_;
 
-```shell
-npx hardhat help
-npx hardhat test
-GAS_REPORT=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+---
+___MarketNFT.sol :___
+> This contract can **sell NFTs**, an **owner** must set the address of the **new token contract**.
+
+___FourHoursNFT.sol :___
+> The contract is an _example_ of how the first and second contracts _work_ together. 
+> + This token contract _can_ mint NFTs not more than four hours after _deploys_. 
+---

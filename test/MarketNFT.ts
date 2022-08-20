@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("FourHoursNFT: ", () => {
+describe("MarketNFT: ", () => {
   const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
   const _value = 100000000000000000n;
   let owner: any;
@@ -13,7 +13,7 @@ describe("FourHoursNFT: ", () => {
     // Getting address for testing.
     [owner, user] = await ethers.getSigners();
 
-    // Deployed 'FourHours.sol'.
+    // Deployed 'MarketNFT.sol'.
     const MarketNFT = await ethers.getContractFactory("MarketNFT", owner);
     marketNFT = await MarketNFT.deploy();
     await marketNFT.deployed();
@@ -23,46 +23,14 @@ describe("FourHoursNFT: ", () => {
     fourHoursNFT = await FourHoursNFT.deploy(marketNFT.address);
     await fourHoursNFT.deployed();
 
-    // Setting the address of 'FourHoursNFT.sol'.
+    // Setting the address of 'FourHoursNFT.sol.'
     await marketNFT.addressOfNFT(fourHoursNFT.address);
   });
 
   // Deploys the contract.
-  it("Should be deployed(token).", async () => {
-    await expect(fourHoursNFT.address).to.be.properAddress;
+  it("Should be deployed.", async () => {
+    await expect(marketNFT.address).to.be.properAddress;
   });
-
-  // For the error call - 'ERR: time'.
-  it('Should be the error: "ERR: time"', async () => {
-    await ethers.provider.send("evm_increaseTime", [14400]);
-    const message = "ERR: time";
-    await expect(
-      fourHoursNFT
-        .connect(user)
-        .createNFT(user.address, "https://www.japancars.ua", 1, marketNFT.address)
-    ).to.be.revertedWith(message);
-  });
-
-  // For the error call - 'ERR: price'.
-  it('Should be the error: "ERR: address"', async () => {
-    const message = "ERR: address";
-    await expect(
-      fourHoursNFT
-        .connect(user)
-        .createNFT(user.address, "https://www.japancars.ua", 1, user.address)
-    ).to.be.revertedWith(message);
-  });
-
-  // Calling a 'createNFT' function.
-  it("Should be created token.", async () => {
-    await fourHoursNFT
-      .connect(owner)
-      .createNFT(user.address, "https://www.japancars.ua", 1, marketNFT.address);
-  });
-
-  /**
-   * Test 'marketNFT' contract.
-   */
 
   // Calling a 'createAndBuy' function, and send 0.1 ETH.
   it("Should be created token.", async () => {
@@ -107,6 +75,18 @@ describe("FourHoursNFT: ", () => {
     ).to.be.revertedWith(message);
   });
 
+  //For the test transaction on the smart contract.
+  it("Should be: transfer ETH on smart contract.", async () => {
+    const transactionHash = await owner.sendTransaction({
+      to: marketNFT.address,
+      value: ethers.utils.parseEther("1.0"),
+    });
+    await expect(() => transactionHash).to.changeEtherBalance(
+      marketNFT.address,
+      1000000000000000000n
+    );
+  });
+
   //For test the 'fallback()' function.
   it("should be: work the fallback() function", async () => {
     const tx = await owner.sendTransaction({
@@ -114,5 +94,30 @@ describe("FourHoursNFT: ", () => {
       data: "0x01",
       value: ethers.utils.parseEther("1.0"),
     });
+  });
+
+  /**
+   * Test 'FourHoursNFT' contract.
+   */
+
+  //For the error call - 'ERR: time'.
+  it('Should be the error: "ERR: time"', async () => {
+    await ethers.provider.send("evm_increaseTime", [14400]);
+    const message = "ERR: time";
+    await expect(
+      fourHoursNFT
+        .connect(user)
+        .createNFT(user.address, "https://www.japancars.ua", 1, marketNFT.address)
+    ).to.be.revertedWith(message);
+  });
+
+  //For the error call - 'ERR: price'.
+  it('Should be the error: "ERR: address"', async () => {
+    const message = "ERR: address";
+    await expect(
+      fourHoursNFT
+        .connect(user)
+        .createNFT(user.address, "https://www.japancars.ua", 1, user.address)
+    ).to.be.revertedWith(message);
   });
 });
